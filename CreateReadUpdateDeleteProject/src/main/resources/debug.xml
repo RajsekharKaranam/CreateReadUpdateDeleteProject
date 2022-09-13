@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<property name="Logs" value="Logs"/>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+   <layout class="ch.qos.Logback.clasic.patternLayout">
+      <pattern>
+        %date{ISO8601}%-5level %class{0}:%L - [%X] %msg%n
+      </pattern>
+   </layout>
+  </appender>
+<appender name="debug"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${Logs}/debug.log</file>
+        <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date{ISO8601}%-5level %class{0}:%L - [%X] %msg%n</Pattern>
+        </encoder>
+  <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            roll over daily and when the file reaches 10 MegaBytes
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+<appender name="error"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${Logs}/error.log</file>
+        <encoder
+            class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%date{ISO8601}%-5level %class{0}:%L - [%X] %msg%n</Pattern>
+        </encoder>
+  <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            roll over daily and when the file reaches 10 MegaBytes
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    send logs to both console and file audit
+    <logger name="com.example.java.controller" level="debug"
+    additivity="false">
+    <apender-ref ref="debug"/>
+     <apender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.example.java.controller" level="error"
+    additivity="false">
+    <apender-ref ref="error"/>
+     <apender-ref ref="STDOUT"/>
+    </logger>
+    <root level="error">
+    <appender-ref ref="FILE-ERROR"/>
+    </root>
+</configuration>

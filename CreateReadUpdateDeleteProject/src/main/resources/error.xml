@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="Logs" value="Logs" />
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.Logback.clasic.patternLayout">
+			<pattern>
+				%date{ISO8601}%-5level %class{0}:%L - [%X] %msg%n
+			</pattern>
+		</layout>
+	</appender>
+
+
+	send logs to both console and file audit
+	<logger name="com.example.java.controller" level="debug"
+		additivity="false">
+		<apender-ref ref="debug" />
+		<apender-ref ref="STDOUT" />
+	</logger>
+	<logger name="com.example.java.controller" level="error"
+		additivity="false">
+		<apender-ref ref="error" />
+		<apender-ref ref="STDOUT" />
+	</logger>
+	<root level="error">
+		<appender-ref ref="FILE-ERROR" />
+	</root>
+</configuration>
